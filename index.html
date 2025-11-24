@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kasatria Visualizer</title>
+
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/renderers/CSS3DRenderer.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tween.js/18.6.4/tween.umd.js"></script>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div id="login-container">
+        <h1>Welcome to Kasatria Visualization Library</h1>
+        <h2>Login to View Data</h2>
+
+        <div id="g_id_onload"
+            data-client_id="528236233682-2g2r1m4vuak4p9n26r3vaar7j1emc4up.apps.googleusercontent.com"
+            data-callback="handleLogin">
+        </div>
+
+        <div class="g_id_signin"
+            data-type="standard"
+            data-size="large"
+            data-theme="outline"
+            data-text="sign_in_with"
+            data-shape="rectangular">
+        </div>
+    </div>
+
+    <div id="container"></div>
+
+    <div id="menu">
+        <button onclick="transform(targets.table, 2000)">TABLE</button>
+        <button onclick="transform(targets.sphere, 2000)">SPHERE</button>
+        <button onclick="transform(targets.helix, 2000)">HELIX</button>
+        <button onclick="transform(targets.grid, 2000)">GRID</button>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
