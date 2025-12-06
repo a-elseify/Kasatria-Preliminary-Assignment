@@ -1,6 +1,6 @@
 let camera, scene, renderer;
 let objects = [];
-let targets = { table: [], sphere: [], helix: [], grid: [] };
+let targets = { table: [], sphere: [], helix: [], grid: [], pyramid: [] };
 
 function handleLogin(response) {
     console.log("Google login success!", response);
@@ -114,6 +114,7 @@ async function init() {
     createSphereLayout();
     createHelixLayout();
     createGridLayout();
+    createPyramidLayout();
 
     renderer = new THREE.CSS3DRenderer();
     renderer.setSize(window.innerWidth, window.innerHeight);
@@ -195,6 +196,51 @@ function createGridLayout() {
     }
 }
 
+function createPyramidLayout() {
+    targets.pyramid = [];
+
+    // Pyramid vertices
+    const apex = new THREE.Vector3(0, 600, 0);        // Apex
+    const B = new THREE.Vector3(-600, -400, 600);    // Base corner 1
+    const C = new THREE.Vector3(600, -400, 600);     // Base corner 2
+    const D = new THREE.Vector3(600, -400, -600);    // Base corner 3
+    const E = new THREE.Vector3(-600, -400, -600);   // Base corner 4
+
+    // Pyramid faces (each face is a triangle)
+    const faces = [
+        [apex, B, C],   // Front face
+        [apex, C, D],   // Right face
+        [apex, D, E],   // Back face
+        [apex, E, B],   // Left face
+        [B, C, D],      // Base triangle 1
+        [B, D, E]       // Base triangle 2
+    ];
+
+    for (let i = 0; i < objects.length; i++) {
+        const face = faces[i % faces.length];  // Cycle through faces
+
+        // Random barycentric coordinates for uniform distribution
+        let u = Math.random();
+        let v = Math.random();
+
+        if (u + v > 1) {
+            u = 1 - u;
+            v = 1 - v;
+        }
+
+        const w = 1 - u - v;
+
+        const pos = new THREE.Vector3()
+            .add(face[0].clone().multiplyScalar(u))
+            .add(face[1].clone().multiplyScalar(v))
+            .add(face[2].clone().multiplyScalar(w));
+
+        const obj = new THREE.Object3D();
+        obj.position.copy(pos);
+
+        targets.pyramid.push(obj);
+    }
+}
 
 function transform(targetsArray, duration) {
     TWEEN.removeAll();
